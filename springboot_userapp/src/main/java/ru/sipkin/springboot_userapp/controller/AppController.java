@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.sipkin.springboot_userapp.model.User;
@@ -14,7 +15,6 @@ import java.util.List;
 public class AppController {
     private UserService userService;
 
-    @Autowired
     public AppController(UserService userService) {
         this.userService = userService;
     }
@@ -40,14 +40,14 @@ public class AppController {
 
         return "redirect:/";
     }
-    @RequestMapping("/updateUser")
-    public String updateUser(@RequestParam("id") int id, Model model) {
+    @RequestMapping("/updateUser/{id}")
+    public String updateUser(@PathVariable("id") int id, Model model) {
         User user = userService.getUser(id);
         model.addAttribute("user", user);
         return "userInfoView";
     }
-    @RequestMapping("/deleteUser")
-    public String deleteUser(@RequestParam("id") int id) {
+    @RequestMapping("/deleteUser/{id}")
+    public String deleteUser(@PathVariable("id") int id) {
         userService.deleteUser(id);
         return "redirect:/";
     }
